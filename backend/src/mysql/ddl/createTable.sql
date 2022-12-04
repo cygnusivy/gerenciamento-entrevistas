@@ -180,32 +180,6 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_telefone` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- View `gerenciamento-entrevistas`.`vge_informacoes_vaga`
--- -----------------------------------------------------
-CREATE OR REPLACE VIEW vge_informacoes_vaga AS
-     SELECT v.id_vaga,
-            v.nome_vaga,
-            v.temp_alocacao,
-            v.localidade,
-            v.descricao,
-            i.nome_idioma
-       FROM tge_vaga v,
-            tge_idioma i
-      where i.id_idioma = v.id_idioma;
-
--- -----------------------------------------------------
--- View `gerenciamento-entrevistas`.`vge_habilidade`
--- -----------------------------------------------------
-CREATE OR REPLACE VIEW vge_habilidade AS
-     SELECT h.id_habilidade,
-            h.nome_habilidade,
-            v.id_vaga
-       FROM tge_vaga v,
-            tge_habilidade h,
-            tge_vinculo_habilidade_vaga vh
-      where h.id_habilidade = vh.id_habilidade and
-            vh.id_vaga = v.id_vaga;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
