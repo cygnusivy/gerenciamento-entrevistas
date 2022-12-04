@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 @AllArgsConstructor
 @Configuration
-public class GerenciamentoEntrevistasAccenture {
+public class GEAccentureApplication {
 
         public static void main(String[] args) {
-            SpringApplication.run(GerenciamentoEntrevistasAccenture.class, args);
+            SpringApplication.run(GEAccentureApplication.class, args);
         }
     }
