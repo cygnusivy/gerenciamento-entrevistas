@@ -11,6 +11,4 @@ public class TgeHabilidadesDto {
 
     private String nomeHabilidade;
 
-    private Integer idVaga;
-
 }

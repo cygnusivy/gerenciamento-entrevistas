@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class VgeInformacoesVagaDto {
+public class TgeVagaDto {
 
     private Integer idVaga;
 
@@ -16,11 +16,11 @@ public class VgeInformacoesVagaDto {
 
     private LocalDate tempoAlocacao;
 
+    private Integer idIdioma;
+
     private String localidade;
 
     private String descricao;
-
-    private String nomeIdioma;
 
     private List<TgeHabilidadesDto> tgeHabilidadesDtolList;
 

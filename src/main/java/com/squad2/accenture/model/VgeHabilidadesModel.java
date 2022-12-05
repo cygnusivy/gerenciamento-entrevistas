@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "VGE_HABILIDADE")
-public class TgeHabilidadesModel {
+public class VgeHabilidadesModel {
 
     @Id
     @Column(name = "ID_HABILIDADE")
@@ -20,8 +20,5 @@ public class TgeHabilidadesModel {
 
     @Column(name = "NOME_HABILIDADE")
     private String nomeHabilidade;
-
-    @Column(name = "ID_VAGA")
-    private Integer idVaga;
 
 }

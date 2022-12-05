@@ -3,6 +3,7 @@ package com.squad2.accenture.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
@@ -12,8 +13,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "VGE_INFORMACOES_VAGA")
-public class VgeInformacoesVagaModel {
+@Table(name = "TGE_VAGA")
+public class TgeVagaModel {
 
     @Id
     @Column(name = "ID_VAGA")
@@ -28,6 +29,10 @@ public class VgeInformacoesVagaModel {
     @NotBlank(message = "Tempo de alocação não informado")
     private LocalDate tempoAlocacao;
 
+    @Column(name = "ID_IDIOMA")
+    @NotBlank(message = "idIdioma não informado")
+    private Integer idIdioma;
+
     @Column
     @NotBlank(message = "Localidade não informada")
     private String localidade;
@@ -35,9 +40,5 @@ public class VgeInformacoesVagaModel {
     @Column
     @NotBlank(message = "Descrição não informada")
     private String descricao;
-
-    @Column(name = "NOME_IDIOMA")
-    @NotBlank(message = "Descrição não informada")
-    private String nomeIdioma;
 
 }
