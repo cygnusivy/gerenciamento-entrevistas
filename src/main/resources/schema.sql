@@ -5,18 +5,28 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema gerenciamento-entrevistas
 -- -----------------------------------------------------
-
+drop schema `gerenciamento-entrevistas`;
 -- -----------------------------------------------------
 -- Schema gerenciamento-entrevistas
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `gerenciamento-entrevistas` DEFAULT CHARACTER SET utf8 ;
 USE `gerenciamento-entrevistas` ;
 
+--DROP TABLE tge_endereco;
+--DROP TABLE tge_telefone;
+--DROP TABLE tge_vinculo_habilidade_vaga;
+--DROP TABLE tge_entrevista;
+--DROP TABLE tge_candidado;
+--DROP TABLE tge_vaga;
+--DROP TABLE tge_idioma;
+--DROP TABLE tge_status;
+--DROP TABLE tge_habilidade;
+
 -- -----------------------------------------------------
 -- Table `gerenciamento-entrevistas`.`tge_idioma`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_idioma` (
-  `id_idioma` INT NOT NULL,
+  `id_idioma` INT NOT NULL AUTO_INCREMENT,
   `nome_idioma` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_idioma`))
 ENGINE = InnoDB;
@@ -25,7 +35,7 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_vaga`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_vaga` (
-  `id_vaga` INT NOT NULL,
+  `id_vaga` INT NOT NULL AUTO_INCREMENT,
   `nome_vaga` VARCHAR(45) NOT NULL,
   `temp_alocacao` DATE NOT NULL,
   `id_idioma` INT NOT NULL,
@@ -43,7 +53,7 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_habilidade`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_habilidade` (
-  `id_habilidade` INT NOT NULL,
+  `id_habilidade` INT NOT NULL AUTO_INCREMENT,
   `nome_habilidade` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id_habilidade`))
 ENGINE = InnoDB;
@@ -52,7 +62,7 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_vinculo_habilidade_vaga`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_vinculo_habilidade_vaga` (
-  `id_vinculo` INT NOT NULL,
+  `id_vinculo` INT NOT NULL AUTO_INCREMENT,
   `id_habilidade` INT NOT NULL,
   `id_vaga` INT NOT NULL,
   PRIMARY KEY (`id_vinculo`),
@@ -72,7 +82,7 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_status`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_status` (
-  `id_status` INT NOT NULL,
+  `id_status` INT NOT NULL AUTO_INCREMENT,
   `nome_status` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`id_status`),
   UNIQUE INDEX `status_UNIQUE` (`nome_status` ASC))
@@ -82,7 +92,7 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_senioridade`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_senioridade` (
-  `id_senioridade` INT NOT NULL,
+  `id_senioridade` INT NOT NULL AUTO_INCREMENT,
   `nome_senioridade` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`id_senioridade`),
   UNIQUE INDEX `senioridade_UNIQUE` (`nome_senioridade` ASC))
@@ -128,11 +138,12 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_entrevista`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_entrevista` (
+  `id_entrevista` INT NOT NULL AUTO_INCREMENT,
   `data_entrevista` DATETIME NOT NULL,
   `candidato_cpf` VARCHAR(15) NOT NULL,
   `descr_habilidades_tecnicas` TEXT(200) NOT NULL,
   `descr_habilidades_interpessoal` TEXT(200) NOT NULL,
-  PRIMARY KEY (`data_entrevista`),
+  PRIMARY KEY (`id_entrevista`),
   INDEX `fk_entrevista_candidato1_idx` (`candidato_cpf` ASC),
   CONSTRAINT `fk_entrevista_candidato1`
     FOREIGN KEY (`candidato_cpf`)
@@ -146,7 +157,7 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_endereco`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_endereco` (
-  `id_endereco` INT NOT NULL,
+  `id_endereco` INT NOT NULL AUTO_INCREMENT,
   `candidato_cpf` VARCHAR(15) NOT NULL,
   `uf` VARCHAR(2) NOT NULL,
   `cidade` VARCHAR(45) NOT NULL,
@@ -168,7 +179,7 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_telefone`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_telefone` (
-  `idtelefone` INT NOT NULL,
+  `idtelefone` INT NOT NULL AUTO_INCREMENT,
   `candidato_cpf` VARCHAR(15) NULL,
   `numero` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`idtelefone`),

@@ -2,11 +2,9 @@ package com.squad2.accenture.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @ToString
 @NoArgsConstructor
@@ -19,7 +17,7 @@ public class TgeIdiomaModel {
 
     @Id
     @Column(name = "id_idioma")
-    @NotBlank(message = "Campo idIdioma não pode ser nulo")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idIdioma;
 
     @Column(name = "nome_idioma")

@@ -1,10 +1,10 @@
 package com.squad2.accenture.business;
 
-import com.squad2.accenture.business.exception.IdVagaNaoPodeSerNull;
-import com.squad2.accenture.business.exception.VagaAssociadaHabilidade;
-import com.squad2.accenture.business.exception.VagaNaoExisteException;
+import com.squad2.accenture.exception.VagaAssociadaHabilidade;
+import com.squad2.accenture.exception.VagaNaoExisteException;
 import com.squad2.accenture.dto.TgeHabilidadesDto;
 import com.squad2.accenture.dto.VgeInformacoesVagaDto;
+import com.squad2.accenture.model.TgeIdiomaModel;
 import com.squad2.accenture.model.VgeHabilidadesModel;
 import com.squad2.accenture.model.VgeInformacoesVagaModel;
 import com.squad2.accenture.repository.VgeInformacoesVagaRepository;

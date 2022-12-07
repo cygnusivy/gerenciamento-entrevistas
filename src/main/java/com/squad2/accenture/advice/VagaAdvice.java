@@ -1,8 +1,8 @@
-package com.squad2.accenture.business.advice;
+package com.squad2.accenture.advice;
 
-import com.squad2.accenture.business.exception.IdVagaNaoPodeSerNull;
-import com.squad2.accenture.business.exception.VagaAssociadaHabilidade;
-import com.squad2.accenture.business.exception.VagaNaoExisteException;
+import com.squad2.accenture.exception.IdVagaNaoPodeSerNull;
+import com.squad2.accenture.exception.VagaAssociadaHabilidade;
+import com.squad2.accenture.exception.VagaNaoExisteException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

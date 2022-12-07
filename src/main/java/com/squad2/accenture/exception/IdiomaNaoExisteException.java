@@ -1,4 +1,4 @@
-package com.squad2.accenture.business.exception;
+package com.squad2.accenture.exception;
 
 public class IdiomaNaoExisteException extends RuntimeException{
 
