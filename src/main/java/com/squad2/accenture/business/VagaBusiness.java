@@ -1,5 +1,6 @@
 package com.squad2.accenture.business;
 
+import com.squad2.accenture.dto.TgeIdiomaDto;
 import com.squad2.accenture.exception.RegistroExisteException;
 import com.squad2.accenture.exception.VagaAssociadaHabilidade;
 import com.squad2.accenture.exception.VagaNaoExisteException;
@@ -7,7 +8,9 @@ import com.squad2.accenture.dto.TgeHabilidadesDto;
 import com.squad2.accenture.dto.VgeInformacoesVagaDto;
 import com.squad2.accenture.model.TgeVagaModel;
 import com.squad2.accenture.model.VgeHabilidadesModel;
+import com.squad2.accenture.model.VgeIdiomaModel;
 import com.squad2.accenture.model.VgeInformacoesVagaModel;
+import com.squad2.accenture.repository.VgeIdiomaRepository;
 import com.squad2.accenture.repository.VgeInformacoesVagaRepository;
 import com.squad2.accenture.repository.VgeHabilidadeRepository;
 import com.squad2.accenture.repository.TgeVagaRepository;
@@ -32,6 +35,9 @@ public class VagaBusiness {
     @Autowired
     TgeVagaRepository vagaRepository;
 
+    @Autowired
+    VgeIdiomaRepository vgeIdiomaRepository;
+
     private final Logger LOGGER = LoggerFactory.getLogger(VagaBusiness.class);
     public TgeVagaModel salvarVaga(@NotNull TgeVagaModel vagaModel){
         LOGGER.info(String.format("Início do método salvarVaga()"));
@@ -55,6 +61,8 @@ public class VagaBusiness {
 
         List<VgeHabilidadesModel> vgeHabilidadesModelList = getListHabilidade(idVaga);
 
+        List<VgeIdiomaModel> vgeIdiomaModelList = vgeIdiomaModelList(idVaga);
+
         VgeInformacoesVagaDto response = new VgeInformacoesVagaDto();
 
         response.setIdVaga(vgeInformacoesVagaModel.getIdVaga());
@@ -62,7 +70,7 @@ public class VagaBusiness {
         response.setTempoAlocacao(vgeInformacoesVagaModel.getTempoAlocacao());
         response.setDescricao(vgeInformacoesVagaModel.getDescricao());
         response.setLocalidade(vgeInformacoesVagaModel.getLocalidade());
-        response.setNomeIdioma(vgeInformacoesVagaModel.getNomeIdioma());
+        response.setTgeIdiomaDtoList(tgeIdiomaDtoList(vgeIdiomaModelList));
         response.setTgeHabilidadesDtolList(getListHabilidadeResponse(vgeHabilidadesModelList));
 
         return response;
@@ -80,13 +88,15 @@ public class VagaBusiness {
             VgeInformacoesVagaDto vgeInformacoesVagaDto = new VgeInformacoesVagaDto();
             List<VgeHabilidadesModel> vgeHabilidadesModelList = getListHabilidade(x.getIdVaga());
             List<TgeHabilidadesDto> tgeHabilidadesDtos = getListHabilidadeResponse(vgeHabilidadesModelList);
+            List<VgeIdiomaModel> vgeIdiomaModelList = vgeIdiomaModelList(x.getIdVaga());
+            List<TgeIdiomaDto> tgeIdiomaDtos = tgeIdiomaDtoList(vgeIdiomaModelList);
 
             vgeInformacoesVagaDto.setIdVaga(x.getIdVaga());
             vgeInformacoesVagaDto.setNomeVaga(x.getNomeVaga());
             vgeInformacoesVagaDto.setDescricao(x.getDescricao());
             vgeInformacoesVagaDto.setLocalidade(x.getLocalidade());
             vgeInformacoesVagaDto.setTempoAlocacao(x.getTempoAlocacao());
-            vgeInformacoesVagaDto.setNomeIdioma(x.getNomeIdioma());
+            vgeInformacoesVagaDto.setTgeIdiomaDtoList(tgeIdiomaDtos);
             vgeInformacoesVagaDto.setTgeHabilidadesDtolList(tgeHabilidadesDtos);
 
             response.add(vgeInformacoesVagaDto);
@@ -132,6 +142,24 @@ public class VagaBusiness {
 
         return response;
     }
+    private List<TgeIdiomaDto> tgeIdiomaDtoList(List<VgeIdiomaModel> idiomas){
+        LOGGER.info("Montando lista de idiomas.");
+        List<TgeIdiomaDto> response = new ArrayList<>();
+
+        if (!idiomas.isEmpty()) {
+            for (VgeIdiomaModel idioma : idiomas){
+                TgeIdiomaDto tgeIdiomaDto = new TgeIdiomaDto();
+                tgeIdiomaDto.setIdIdioma(idioma.getIdIdioma());
+                tgeIdiomaDto.setIdioma(idioma.getIdioma());
+
+                response.add(tgeIdiomaDto);
+            }
+        }else{
+            response = new ArrayList<>();
+        }
+
+        return response;
+    }
     private VgeInformacoesVagaModel selecionarVagaPeloId(Integer idvaga){
         LOGGER.info("Inicío do método selecionarVagaPeloId()");
         VgeInformacoesVagaModel vgeInformacoesVagaModel = vgeInformacoesVagaRepository.findByIdVaga(idvaga);
@@ -141,6 +169,11 @@ public class VagaBusiness {
     private List<VgeHabilidadesModel> getListHabilidade(Integer idVaga){
         LOGGER.info("Buscando lista de habilidades pelo  ID: {} da vaga", idVaga);
         return vgeHabilidadeRepository.findByIdVaga(idVaga);
+    }
+
+    private List<VgeIdiomaModel> vgeIdiomaModelList(Integer idVaga){
+        LOGGER.info("Buscando lista de idiomas pelo  ID: {} da vaga", idVaga);
+        return vgeIdiomaRepository.findByIdVaga(idVaga);
     }
 
     private void validaExistenciaDaVaga(Integer idVaga){

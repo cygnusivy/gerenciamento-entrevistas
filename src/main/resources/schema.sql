@@ -27,7 +27,7 @@ USE `gerenciamento-entrevistas` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_idioma` (
   `id_idioma` INT NOT NULL AUTO_INCREMENT,
-  `nome_idioma` VARCHAR(45) NOT NULL,
+  `nome_idioma` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id_idioma`))
 ENGINE = InnoDB;
 
@@ -38,11 +38,25 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_vaga` (
   `id_vaga` INT NOT NULL AUTO_INCREMENT,
   `nome_vaga` VARCHAR(100) NOT NULL,
   `temp_alocacao` DATE NOT NULL,
-  `id_idioma` INT,
   `localidade` VARCHAR(45) NOT NULL,
   `descricao` VARCHAR(2000) NULL,
-  PRIMARY KEY (`id_vaga`),
-  CONSTRAINT `fk_vaga_idioma`
+  PRIMARY KEY (`id_vaga`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `gerenciamento-entrevistas`.`tge_vinculo_idioma_vaga`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_vinculo_idioma_vaga` (
+  `id_vinculo` INT NOT NULL AUTO_INCREMENT,
+  `id_idioma` INT NOT NULL,
+  `id_vaga` INT NOT NULL,
+  PRIMARY KEY (`id_vinculo`),
+  CONSTRAINT `fk_vinculo_idioma_vaga_vaga`
+        FOREIGN KEY (`id_vaga`)
+        REFERENCES `gerenciamento-entrevistas`.`tge_vaga` (`id_vaga`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
+    CONSTRAINT `fk_vinculo_idioma_vaga_idioma`
         FOREIGN KEY (`id_idioma`)
         REFERENCES `gerenciamento-entrevistas`.`tge_idioma` (`id_idioma`)
         ON DELETE NO ACTION
@@ -66,12 +80,12 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_vinculo_habilidade_v
   `id_habilidade` INT NOT NULL,
   `id_vaga` INT NOT NULL,
   PRIMARY KEY (`id_vinculo`),
-  CONSTRAINT `fk_vinculo_habilidade`
+  CONSTRAINT `fk_vinculo_habilidade_vaga_habilidade`
       FOREIGN KEY (`id_habilidade`)
       REFERENCES `gerenciamento-entrevistas`.`tge_habilidade` (`id_habilidade`)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION,
-  CONSTRAINT `fk_vinculo_vaga`
+  CONSTRAINT `fk_vinculo_habilidade_vaga_vaga`
       FOREIGN KEY (`id_vaga`)
       REFERENCES `gerenciamento-entrevistas`.`tge_vaga` (`id_vaga`)
       ON DELETE NO ACTION
@@ -117,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_candidado` (
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
   UNIQUE INDEX `nome_UNIQUE` (`nome` ASC),
   INDEX `fk_candidato_vagas1_idx` (`vagas_id_vaga` ASC),
-  CONSTRAINT `fk_candidato_vagas1`
+  CONSTRAINT `fk_candidato_vagas`
     FOREIGN KEY (`vagas_id_vaga`)
     REFERENCES `gerenciamento-entrevistas`.`tge_vaga` (`id_vaga`)
     ON DELETE NO ACTION
@@ -146,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_entrevista` (
   `cod_status` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`id_entrevista`),
   INDEX `fk_entrevista_candidato1_idx` (`candidato_cpf` ASC),
-  CONSTRAINT `fk_entrevista_candidato1`
+  CONSTRAINT `fk_entrevista_candidato`
     FOREIGN KEY (`candidato_cpf`)
     REFERENCES `gerenciamento-entrevistas`.`tge_candidado` (`cpf`)
     ON DELETE CASCADE
@@ -197,19 +211,16 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_telefone` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
--- -----------------------------------------------------
+-- ------------------------------------------------------
 -- View `gerenciamento-entrevistas`.`vge_informacoes_vaga`
--- -----------------------------------------------------
+-- ------------------------------------------------------
 CREATE OR REPLACE VIEW vge_informacoes_vaga AS
      SELECT v.id_vaga,
             v.nome_vaga,
             v.temp_alocacao,
             v.localidade,
-            v.descricao,
-            i.nome_idioma
-       FROM tge_vaga v,
-            tge_idioma i
-      where i.id_idioma = v.id_idioma;
+            v.descricao
+       FROM tge_vaga v;
 
 -- -----------------------------------------------------
 -- View `gerenciamento-entrevistas`.`vge_habilidade`
@@ -223,6 +234,19 @@ CREATE OR REPLACE VIEW vge_habilidade AS
             tge_vinculo_habilidade_vaga vh
       where h.id_habilidade = vh.id_habilidade and
             vh.id_vaga = v.id_vaga;
+
+-- -----------------------------------------------------
+-- View `gerenciamento-entrevistas`.`vge_idioma`
+-- -----------------------------------------------------
+CREATE OR REPLACE VIEW vge_idioma AS
+     SELECT i.id_idioma,
+            i.nome_idioma,
+            v.id_vaga
+       FROM tge_vaga v,
+            tge_idioma i,
+            tge_vinculo_idioma_vaga iv
+      where i.id_idioma = iv.id_idioma and
+            iv.id_vaga = v.id_vaga;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

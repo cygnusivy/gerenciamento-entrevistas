@@ -11,8 +11,8 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @Entity
-@Table(name = "TGE_IDIOMA")
-public class TgeIdiomaModel {
+@Table(name = "VGE_IDIOMA")
+public class VgeIdiomaModel {
 
     @Id
     @Column(name = "ID_IDIOMA")

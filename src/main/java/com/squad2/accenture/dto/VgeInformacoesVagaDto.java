@@ -20,7 +20,7 @@ public class VgeInformacoesVagaDto {
 
     private String descricao;
 
-    private String nomeIdioma;
+    private List<TgeIdiomaDto> tgeIdiomaDtoList;
 
     private List<TgeHabilidadesDto> tgeHabilidadesDtolList;
 

@@ -30,9 +30,6 @@ public class TgeVagaModel {
     @NotNull(message = "Tempo de alocação não informado")
     private LocalDate tempoAlocacao;
 
-    @Column(name = "ID_IDIOMA")
-    private Integer idIdioma;
-
     @Column
     @NotBlank(message = "Localidade não informada")
     private String localidade;

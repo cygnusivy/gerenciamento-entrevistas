@@ -1,7 +1,6 @@
 package com.squad2.accenture.controller;
 
 import com.squad2.accenture.dto.VgeInformacoesVagaDto;
-import com.squad2.accenture.model.TgeIdiomaModel;
 import com.squad2.accenture.model.TgeVagaModel;
 import com.squad2.accenture.service.VagaService;
 import org.springframework.http.HttpStatus;

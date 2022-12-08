@@ -36,8 +36,4 @@ public class VgeInformacoesVagaModel {
     @NotBlank(message = "Descrição não informada")
     private String descricao;
 
-    @Column(name = "NOME_IDIOMA")
-    @NotBlank(message = "Descrição não informada")
-    private String nomeIdioma;
-
 }

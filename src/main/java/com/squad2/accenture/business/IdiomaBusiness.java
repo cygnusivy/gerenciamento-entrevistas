@@ -7,6 +7,8 @@ import com.squad2.accenture.dto.TgeIdiomaDto;
 import com.squad2.accenture.model.TgeIdiomaModel;
 import com.squad2.accenture.repository.TgeIdiomaRepository;
 import com.squad2.accenture.repository.TgeVagaRepository;
+import com.squad2.accenture.repository.TgeVinculoHabilidadeVagaRepository;
+import com.squad2.accenture.repository.VgeIdiomaRepository;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,9 @@ public class IdiomaBusiness {
 
     @Autowired
     private TgeVagaRepository tgeVagaRepository;
+
+    @Autowired
+    private VgeIdiomaRepository vgeIdiomaRepository;
 
     private final Logger LOGGER = LoggerFactory.getLogger(IdiomaBusiness.class);
 
@@ -71,9 +76,9 @@ public class IdiomaBusiness {
     public void deletaridioma(Integer idIdioma){
         LOGGER.info(String.format("Início do método deletarIdioma()" + idIdioma));
         verificaExistenciaDeIdioma(idIdioma);
-        Integer retorno = this.tgeVagaRepository.veriricaExistenciaIdioma(idIdioma);
+        Boolean retorno = this.vgeIdiomaRepository.existsByIdIdioma(idIdioma);
 
-        if (retorno > 0){
+        if (retorno){
             throw new IdiomaAssociadoAVaga(this.tgeIdiomaRepository.findById(idIdioma).get().getIdioma());
         }else{
             LOGGER.info(String.format("Idioma deletado com sucesso!"));
