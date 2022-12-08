@@ -36,11 +36,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_vaga` (
   `id_vaga` INT NOT NULL AUTO_INCREMENT,
-  `nome_vaga` VARCHAR(45) NOT NULL,
+  `nome_vaga` VARCHAR(100) NOT NULL,
   `temp_alocacao` DATE NOT NULL,
-  `id_idioma` INT NOT NULL,
+  `id_idioma` INT,
   `localidade` VARCHAR(45) NOT NULL,
-  `descricao` VARCHAR(45) NULL,
+  `descricao` VARCHAR(2000) NULL,
   PRIMARY KEY (`id_vaga`),
   CONSTRAINT `fk_vaga_idioma`
         FOREIGN KEY (`id_idioma`)
@@ -82,9 +82,9 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_status`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_status` (
-  `id_status` INT NOT NULL AUTO_INCREMENT,
+  `cod_status` VARCHAR(2) NOT NULL,
   `nome_status` VARCHAR(11) NOT NULL,
-  PRIMARY KEY (`id_status`),
+  PRIMARY KEY (`cod_status`),
   UNIQUE INDEX `status_UNIQUE` (`nome_status` ASC))
 ENGINE = InnoDB;
 
@@ -93,7 +93,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_senioridade` (
   `id_senioridade` INT NOT NULL AUTO_INCREMENT,
-  `nome_senioridade` VARCHAR(11) NOT NULL,
+  `nome_senioridade` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id_senioridade`),
   UNIQUE INDEX `senioridade_UNIQUE` (`nome_senioridade` ASC))
 ENGINE = InnoDB;
@@ -103,7 +103,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_candidado` (
   `cpf` VARCHAR(15) NOT NULL,
-  `nome` VARCHAR(60) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
   `descricao_tecnica` VARCHAR(2000) NULL,
   `email` VARCHAR(100) NOT NULL,
   `pretencao_salario` DECIMAL(7,2) NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_candidado` (
   `nota_logica` DECIMAL(4,2) NOT NULL,
   `nota_sql` DECIMAL(4,2) NOT NULL,
   `id_senioridade` INT NOT NULL,
-  `status_id_status` INT NOT NULL,
+  `cod_status` VARCHAR(2) NOT NULL,
   `vagas_id_vaga` INT NOT NULL,
   PRIMARY KEY (`cpf`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
@@ -123,11 +123,11 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_candidado` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_candidato_status`
-      FOREIGN KEY (`status_id_status`)
-      REFERENCES `gerenciamento-entrevistas`.`tge_status` (`id_status`)
+      FOREIGN KEY (`cod_status`)
+      REFERENCES `gerenciamento-entrevistas`.`tge_status` (`cod_status`)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION,
-  CONSTRAINT `fk_senioridade_status`
+  CONSTRAINT `fk_candidato_senioridade`
         FOREIGN KEY (`id_senioridade`)
         REFERENCES `gerenciamento-entrevistas`.`tge_senioridade` (`id_senioridade`)
         ON DELETE NO ACTION
@@ -141,15 +141,21 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_entrevista` (
   `id_entrevista` INT NOT NULL AUTO_INCREMENT,
   `data_entrevista` DATETIME NOT NULL,
   `candidato_cpf` VARCHAR(15) NOT NULL,
-  `descr_habilidades_tecnicas` TEXT(200) NOT NULL,
-  `descr_habilidades_interpessoal` TEXT(200) NOT NULL,
+  `descr_habilidades_tecnicas` TEXT(2000) NOT NULL,
+  `descr_habilidades_interpessoal` TEXT(2000) NOT NULL,
+  `cod_status` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`id_entrevista`),
   INDEX `fk_entrevista_candidato1_idx` (`candidato_cpf` ASC),
   CONSTRAINT `fk_entrevista_candidato1`
     FOREIGN KEY (`candidato_cpf`)
     REFERENCES `gerenciamento-entrevistas`.`tge_candidado` (`cpf`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_entrevista_status`
+      FOREIGN KEY (`cod_status`)
+      REFERENCES `gerenciamento-entrevistas`.`tge_status` (`cod_status`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -179,10 +185,10 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_telefone`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_telefone` (
-  `idtelefone` INT NOT NULL AUTO_INCREMENT,
+  `id_telefone` INT NOT NULL AUTO_INCREMENT,
   `candidato_cpf` VARCHAR(15) NULL,
   `numero` VARCHAR(11) NOT NULL,
-  PRIMARY KEY (`idtelefone`),
+  PRIMARY KEY (`id_telefone`),
   INDEX `fk_telefone_candidato1_idx` (`candidato_cpf` ASC),
   CONSTRAINT `fk_telefone_candidato1`
     FOREIGN KEY (`candidato_cpf`)

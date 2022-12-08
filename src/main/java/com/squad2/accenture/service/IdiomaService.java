@@ -18,7 +18,7 @@ public class IdiomaService {
         this.idiomaBusiness.salvarIdioma(idioma);
     }
     public TgeIdiomaDto getIdioma(Integer idIdioma){
-        return idiomaBusiness.getIdioma(idIdioma);
+        return idiomaBusiness.selecionarIdioma(idIdioma);
     }
     public List<TgeIdiomaDto> listarTodosIdiomas(){
         return this.idiomaBusiness.listarTodosIdiomas();

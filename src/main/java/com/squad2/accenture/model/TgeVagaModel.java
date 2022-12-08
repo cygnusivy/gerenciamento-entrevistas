@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @ToString
@@ -26,11 +27,10 @@ public class TgeVagaModel {
     private String nomeVaga;
 
     @Column(name = "TEMP_ALOCACAO")
-    @NotBlank(message = "Tempo de alocação não informado")
+    @NotNull(message = "Tempo de alocação não informado")
     private LocalDate tempoAlocacao;
 
     @Column(name = "ID_IDIOMA")
-    @NotBlank(message = "idIdioma não informado")
     private Integer idIdioma;
 
     @Column

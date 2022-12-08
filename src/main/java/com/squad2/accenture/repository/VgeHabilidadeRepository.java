@@ -4,9 +4,11 @@ import com.squad2.accenture.model.VgeHabilidadesModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface VgeHabilidadeRepository extends JpaRepository<VgeHabilidadesModel, Integer>  {
 
     @Query(value = "SELECT id_habilidade,                      " +
