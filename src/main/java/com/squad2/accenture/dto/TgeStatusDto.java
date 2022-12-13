@@ -10,5 +10,4 @@ public class TgeStatusDto {
     private String codStatus;
 
     private String nomeStatus;
-
 }

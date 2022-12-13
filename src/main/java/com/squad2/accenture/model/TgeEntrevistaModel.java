@@ -11,8 +11,6 @@ import java.time.LocalDate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "TGE_ENTREVISTA")
 public class TgeEntrevistaModel {
@@ -35,4 +33,52 @@ public class TgeEntrevistaModel {
 
     @Column(name = "COD_STATUS")
     private String codStatus;
+
+    public Integer getIdEntrevista() {
+        return idEntrevista;
+    }
+
+    public void setIdEntrevista(Integer idEntrevista) {
+        this.idEntrevista = idEntrevista;
+    }
+
+    public LocalDate getDataEntrevista() {
+        return dataEntrevista;
+    }
+
+    public void setDataEntrevista(LocalDate dataEntrevista) {
+        this.dataEntrevista = dataEntrevista;
+    }
+
+    public String getCandidatoCpf() {
+        return candidatoCpf;
+    }
+
+    public void setCandidatoCpf(String candidatoCpf) {
+        this.candidatoCpf = candidatoCpf;
+    }
+
+    public String getDescHabilidadesTecnicas() {
+        return descHabilidadesTecnicas;
+    }
+
+    public void setDescHabilidadesTecnicas(String descHabilidadesTecnicas) {
+        this.descHabilidadesTecnicas = descHabilidadesTecnicas;
+    }
+
+    public String getDescHabilidadesInterpessoais() {
+        return descHabilidadesInterpessoais;
+    }
+
+    public void setDescHabilidadesInterpessoais(String descHabilidadesInterpessoais) {
+        this.descHabilidadesInterpessoais = descHabilidadesInterpessoais;
+    }
+
+    public String getCodStatus() {
+        return codStatus;
+    }
+
+    public void setCodStatus(String codStatus) {
+        this.codStatus = codStatus;
+    }
 }

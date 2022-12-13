@@ -22,5 +22,4 @@ public class TgeEnderecoDto {
     private String rua;
 
     private Integer numero;
-
 }

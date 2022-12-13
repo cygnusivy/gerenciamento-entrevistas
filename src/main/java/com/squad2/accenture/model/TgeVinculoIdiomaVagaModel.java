@@ -11,8 +11,6 @@ import javax.validation.constraints.NotBlank;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "TGE_VINCULO_IDIOMA_VAGA")
 public class TgeVinculoIdiomaVagaModel {
@@ -29,4 +27,27 @@ public class TgeVinculoIdiomaVagaModel {
     @NotBlank(message = "Campo idVaga não pode ser nulo!")
     private Integer idVaga;
 
+    public Integer getIdVinculo() {
+        return idVinculo;
+    }
+
+    public void setIdVinculo(Integer idVinculo) {
+        this.idVinculo = idVinculo;
+    }
+
+    public Integer getIdHabilidade() {
+        return idHabilidade;
+    }
+
+    public void setIdHabilidade(Integer idHabilidade) {
+        this.idHabilidade = idHabilidade;
+    }
+
+    public Integer getIdVaga() {
+        return idVaga;
+    }
+
+    public void setIdVaga(Integer idVaga) {
+        this.idVaga = idVaga;
+    }
 }

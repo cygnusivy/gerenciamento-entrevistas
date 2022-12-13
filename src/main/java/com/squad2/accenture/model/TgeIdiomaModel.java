@@ -8,8 +8,6 @@ import javax.validation.constraints.NotBlank;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "TGE_IDIOMA")
 public class TgeIdiomaModel {
@@ -23,4 +21,19 @@ public class TgeIdiomaModel {
     @NotBlank(message = "Campo idioma não pode ser nulo")
     private String idioma;
 
+    public Integer getIdIdioma() {
+        return idIdioma;
+    }
+
+    public void setIdIdioma(Integer idIdioma) {
+        this.idIdioma = idIdioma;
+    }
+
+    public String getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
+    }
 }

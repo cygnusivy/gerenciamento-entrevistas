@@ -19,5 +19,4 @@ public class TgeCandidatoDto {
     Integer idSenioridade;
     String codStatus;
     Integer IdVaga;
-    
 }

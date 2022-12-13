@@ -10,5 +10,4 @@ public class TgeHabilidadesDto {
     private Integer idHabilidade;
 
     private String nomeHabilidade;
-
 }

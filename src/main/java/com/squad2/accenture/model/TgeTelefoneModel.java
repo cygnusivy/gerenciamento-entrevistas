@@ -11,8 +11,6 @@ import javax.validation.constraints.NotBlank;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "TGE_TELEFONE")
 public class TgeTelefoneModel {
@@ -28,4 +26,28 @@ public class TgeTelefoneModel {
     @Column
     @NotBlank(message = "Campo numero não pode ser nulo")
     private String numero;
+
+    public Integer getIdTelefone() {
+        return idTelefone;
+    }
+
+    public void setIdTelefone(Integer idTelefone) {
+        this.idTelefone = idTelefone;
+    }
+
+    public String getCandidatoCpf() {
+        return candidatoCpf;
+    }
+
+    public void setCandidatoCpf(String candidatoCpf) {
+        this.candidatoCpf = candidatoCpf;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
 }

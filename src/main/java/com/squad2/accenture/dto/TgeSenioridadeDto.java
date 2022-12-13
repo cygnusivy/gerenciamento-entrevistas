@@ -10,5 +10,4 @@ public class TgeSenioridadeDto {
     private Integer idSenioridade;
 
     private String senioridade;
-
 }

@@ -9,8 +9,6 @@ import java.time.LocalDate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "VGE_INFORMACOES_VAGA")
 public class VgeInformacoesVagaModel {
@@ -36,4 +34,43 @@ public class VgeInformacoesVagaModel {
     @NotBlank(message = "Descrição não informada")
     private String descricao;
 
+    public Integer getIdVaga() {
+        return idVaga;
+    }
+
+    public void setIdVaga(Integer idVaga) {
+        this.idVaga = idVaga;
+    }
+
+    public String getNomeVaga() {
+        return nomeVaga;
+    }
+
+    public void setNomeVaga(String nomeVaga) {
+        this.nomeVaga = nomeVaga;
+    }
+
+    public LocalDate getTempoAlocacao() {
+        return tempoAlocacao;
+    }
+
+    public void setTempoAlocacao(LocalDate tempoAlocacao) {
+        this.tempoAlocacao = tempoAlocacao;
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 }

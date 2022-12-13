@@ -11,8 +11,6 @@ import javax.validation.constraints.NotBlank;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "TGE_SENIORIDADE")
 public class TgeSenioridadeModel {
@@ -24,4 +22,20 @@ public class TgeSenioridadeModel {
     @Column(name = "NOME_SENIORIDADE")
     @NotBlank(message = "Campo senioridade não pode ser nulo!")
     private String senioridade;
+
+    public Integer getIdSenioridade() {
+        return idSenioridade;
+    }
+
+    public void setIdSenioridade(Integer idSenioridade) {
+        this.idSenioridade = idSenioridade;
+    }
+
+    public String getSenioridade() {
+        return senioridade;
+    }
+
+    public void setSenioridade(String senioridade) {
+        this.senioridade = senioridade;
+    }
 }

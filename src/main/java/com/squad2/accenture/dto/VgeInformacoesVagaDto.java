@@ -23,5 +23,4 @@ public class VgeInformacoesVagaDto {
     private List<TgeIdiomaDto> tgeIdiomaDtoList;
 
     private List<TgeHabilidadesDto> tgeHabilidadesDtolList;
-
 }

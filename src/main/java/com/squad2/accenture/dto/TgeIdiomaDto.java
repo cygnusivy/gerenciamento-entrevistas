@@ -10,5 +10,4 @@ public class TgeIdiomaDto {
     private Integer idIdioma;
 
     private String idioma;
-
 }

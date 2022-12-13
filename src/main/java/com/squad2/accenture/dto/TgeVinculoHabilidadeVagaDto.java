@@ -12,5 +12,4 @@ public class TgeVinculoHabilidadeVagaDto {
     private Integer idHabilidade;
 
     private Integer idVaga;
-
 }

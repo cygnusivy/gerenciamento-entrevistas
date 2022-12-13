@@ -12,5 +12,4 @@ public class TgeVinculoIdiomaVagaDto {
     private Integer idHabilidade;
 
     private Integer idVaga;
-
 }

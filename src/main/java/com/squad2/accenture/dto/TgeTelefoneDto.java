@@ -12,5 +12,4 @@ public class TgeTelefoneDto {
     private String candidatoCpf;
 
     private String numero;
-
 }

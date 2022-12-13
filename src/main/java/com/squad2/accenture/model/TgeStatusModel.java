@@ -11,8 +11,6 @@ import javax.validation.constraints.NotBlank;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "TGE_STATUS")
 public class TgeStatusModel {
@@ -24,4 +22,20 @@ public class TgeStatusModel {
     @Column(name = "NOME_STATUS")
     @NotBlank(message = "Campo nomeStatus não pode ser nulo!")
     private String nomeStatus;
+
+    public String getCodStatus() {
+        return codStatus;
+    }
+
+    public void setCodStatus(String codStatus) {
+        this.codStatus = codStatus;
+    }
+
+    public String getNomeStatus() {
+        return nomeStatus;
+    }
+
+    public void setNomeStatus(String nomeStatus) {
+        this.nomeStatus = nomeStatus;
+    }
 }
