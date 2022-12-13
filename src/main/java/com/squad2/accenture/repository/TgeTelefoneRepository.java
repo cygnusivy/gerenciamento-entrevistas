@@ -6,4 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TgeTelefoneRepository extends JpaRepository<TgeTelefoneModel, Integer> {
+
+    Boolean existsByNumero(String numero);
+
+    TgeTelefoneModel findByNumero(String numero);
+
+    TgeTelefoneModel findByCandidatoCpf(String cpf);
 }

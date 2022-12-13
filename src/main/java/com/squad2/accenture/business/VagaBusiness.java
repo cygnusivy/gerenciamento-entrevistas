@@ -1,9 +1,9 @@
 package com.squad2.accenture.business;
 
 import com.squad2.accenture.dto.TgeIdiomaDto;
-import com.squad2.accenture.exception.RegistroExisteException;
-import com.squad2.accenture.exception.VagaAssociadaHabilidade;
-import com.squad2.accenture.exception.VagaNaoExisteException;
+import com.squad2.accenture.exception.RegistroJaExisteException;
+import com.squad2.accenture.exception.RegistroNaoExisteException;
+import com.squad2.accenture.exception.RestricaoDeIntegridadeException;
 import com.squad2.accenture.dto.TgeHabilidadesDto;
 import com.squad2.accenture.dto.VgeInformacoesVagaDto;
 import com.squad2.accenture.model.TgeVagaModel;
@@ -48,7 +48,7 @@ public class VagaBusiness {
             return vagaModel;
         }else{
             String concat = "Vaga " + this.vagaRepository.findByNomeVaga(vagaModel.getNomeVaga()).getNomeVaga();
-            throw new RegistroExisteException(concat);
+            throw new RegistroJaExisteException(concat);
         }
     }
 
@@ -78,7 +78,7 @@ public class VagaBusiness {
     }
 
     public List<VgeInformacoesVagaDto> listarTodasVagas(){
-        LOGGER.info("Início do método listarTodasAsVagas");
+        LOGGER.info("Início do método listarTodasAsVagas().");
         List<VgeInformacoesVagaModel> vgeInformacoesVagaModel = getTodasVagas();
 
         List<VgeInformacoesVagaDto> response = new ArrayList<>();
@@ -113,18 +113,30 @@ public class VagaBusiness {
         Integer retorno = this.vgeHabilidadeRepository.verificaVagaAssociada(idVaga);
 
         if (retorno > 0){
-            throw new VagaAssociadaHabilidade(this.vagaRepository.findById(idVaga).get().getNomeVaga());
+            String concat = "Existem registros associados a vaga " + this.vagaRepository.findById(idVaga).get().getNomeVaga() + ", não é possível deleta-lá.";
+            throw new RestricaoDeIntegridadeException(concat);
         }else{
             LOGGER.info("Vaga deletada com sucesso.");
             this.vagaRepository.deleteById(idVaga);
         }
     }
 
+    public void atualizarVaga(Integer id, TgeVagaModel vagaModel){
+        validaExistenciaDaVaga(id);
+        TgeVagaModel tgeVagaModel = this.vagaRepository.findById(id).get();
+        tgeVagaModel.setNomeVaga(vagaModel.getNomeVaga());
+        tgeVagaModel.setDescricao(vagaModel.getDescricao());
+        tgeVagaModel.setLocalidade(vagaModel.getLocalidade());
+        tgeVagaModel.setTempoAlocacao(vagaModel.getTempoAlocacao());
+        this.vagaRepository.save(tgeVagaModel);
+
+    }
     private List<VgeInformacoesVagaModel> getTodasVagas(){
-        LOGGER.info("Selecionando todas as vagas.");
+        LOGGER.info("Início do método getTodasVagas().");
         return this.vgeInformacoesVagaRepository.findAll();
     }
     private List<TgeHabilidadesDto> getListHabilidadeResponse(List<VgeHabilidadesModel> habilidades){
+        LOGGER.info("Início do método getListHabilidadeResponse().");
         LOGGER.info("Montando lista de habilidades.");
         List<TgeHabilidadesDto> response = new ArrayList<>();
 
@@ -143,6 +155,7 @@ public class VagaBusiness {
         return response;
     }
     private List<TgeIdiomaDto> tgeIdiomaDtoList(List<VgeIdiomaModel> idiomas){
+        LOGGER.info("Início do método tgeIdiomaDtoList().");
         LOGGER.info("Montando lista de idiomas.");
         List<TgeIdiomaDto> response = new ArrayList<>();
 
@@ -167,20 +180,20 @@ public class VagaBusiness {
     }
 
     private List<VgeHabilidadesModel> getListHabilidade(Integer idVaga){
-        LOGGER.info("Buscando lista de habilidades pelo  ID: {} da vaga", idVaga);
+        LOGGER.info("Início do método getListHabilidade().");
         return vgeHabilidadeRepository.findByIdVaga(idVaga);
     }
 
     private List<VgeIdiomaModel> vgeIdiomaModelList(Integer idVaga){
-        LOGGER.info("Buscando lista de idiomas pelo  ID: {} da vaga", idVaga);
+        LOGGER.info("Início do método vgeIdiomaModelList().");
         return vgeIdiomaRepository.findByIdVaga(idVaga);
     }
 
     private void validaExistenciaDaVaga(Integer idVaga){
         LOGGER.info("Início do método validaExistenciaDaVaga().");
         if(!(this.vagaRepository.existsById(idVaga))){
-            throw new VagaNaoExisteException();
+            String concat = "Vaga de ID: " + idVaga + " não existe na base de dados. Insira um idVga diferente";
+            throw new RegistroNaoExisteException(concat);
         }
     }
-
 }

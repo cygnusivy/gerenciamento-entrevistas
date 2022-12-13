@@ -31,5 +31,4 @@ public class IdiomaService {
     public void alterarIdioma(Integer idIdioma, TgeIdiomaModel tgeIdiomaModel){
         this.idiomaBusiness.atualizarIdioma(idIdioma, tgeIdiomaModel);
     }
-
 }

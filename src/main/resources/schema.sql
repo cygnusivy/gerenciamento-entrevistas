@@ -16,7 +16,7 @@ USE `gerenciamento-entrevistas` ;
 --DROP TABLE tge_telefone;
 --DROP TABLE tge_vinculo_habilidade_vaga;
 --DROP TABLE tge_entrevista;
---DROP TABLE tge_candidado;
+--DROP TABLE tge_candidato;
 --DROP TABLE tge_vaga;
 --DROP TABLE tge_idioma;
 --DROP TABLE tge_status;
@@ -96,8 +96,8 @@ ENGINE = InnoDB;
 -- Table `gerenciamento-entrevistas`.`tge_status`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_status` (
-  `cod_status` VARCHAR(2) NOT NULL,
-  `nome_status` VARCHAR(11) NOT NULL,
+  `cod_status` VARCHAR(3) NOT NULL,
+  `nome_status` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`cod_status`),
   UNIQUE INDEX `status_UNIQUE` (`nome_status` ASC))
 ENGINE = InnoDB;
@@ -113,9 +113,9 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_senioridade` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `gerenciamento-entrevistas`.`tge_candidado`
+-- Table `gerenciamento-entrevistas`.`tge_candidato`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_candidado` (
+CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_candidato` (
   `cpf` VARCHAR(15) NOT NULL,
   `nome` VARCHAR(100) NOT NULL,
   `descricao_tecnica` VARCHAR(2000) NULL,
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_candidado` (
   `nota_logica` DECIMAL(4,2) NOT NULL,
   `nota_sql` DECIMAL(4,2) NOT NULL,
   `id_senioridade` INT NOT NULL,
-  `cod_status` VARCHAR(2) NOT NULL,
+  `cod_status` VARCHAR(3) NOT NULL,
   `vagas_id_vaga` INT NOT NULL,
   PRIMARY KEY (`cpf`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
@@ -157,12 +157,12 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_entrevista` (
   `candidato_cpf` VARCHAR(15) NOT NULL,
   `descr_habilidades_tecnicas` TEXT(2000) NOT NULL,
   `descr_habilidades_interpessoal` TEXT(2000) NOT NULL,
-  `cod_status` VARCHAR(2) NOT NULL,
+  `cod_status` VARCHAR(3) NOT NULL,
   PRIMARY KEY (`id_entrevista`),
   INDEX `fk_entrevista_candidato1_idx` (`candidato_cpf` ASC),
   CONSTRAINT `fk_entrevista_candidato`
     FOREIGN KEY (`candidato_cpf`)
-    REFERENCES `gerenciamento-entrevistas`.`tge_candidado` (`cpf`)
+    REFERENCES `gerenciamento-entrevistas`.`tge_candidato` (`cpf`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_entrevista_status`
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_endereco` (
   INDEX `fk_endereco_candidato_idx` (`candidato_cpf` ASC),
   CONSTRAINT `fk_endereco_candidato`
     FOREIGN KEY (`candidato_cpf`)
-    REFERENCES `gerenciamento-entrevistas`.`tge_candidado` (`cpf`)
+    REFERENCES `gerenciamento-entrevistas`.`tge_candidato` (`cpf`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `gerenciamento-entrevistas`.`tge_telefone` (
   INDEX `fk_telefone_candidato1_idx` (`candidato_cpf` ASC),
   CONSTRAINT `fk_telefone_candidato1`
     FOREIGN KEY (`candidato_cpf`)
-    REFERENCES `gerenciamento-entrevistas`.`tge_candidado` (`cpf`)
+    REFERENCES `gerenciamento-entrevistas`.`tge_candidato` (`cpf`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

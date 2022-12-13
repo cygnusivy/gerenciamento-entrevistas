@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TgeSenioridadeRepository extends JpaRepository<TgeSenioridadeModel, Integer> {
+
+    Boolean existsBySenioridade(String Senioridade);
+
+    TgeSenioridadeModel findBySenioridade(String senioridade);
 }

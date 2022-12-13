@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TgeVinculoHabilidadeVagaRepository extends JpaRepository<TgeVinculoHabilidadeVagaModel, Integer> {
+
+    Boolean existsByIdHabilidadeAndIdVaga(Integer idHabilidade, Integer idVaga);
+
+    TgeVinculoHabilidadeVagaModel findByIdHabilidadeAndIdVaga(Integer idHabilidade, Integer idVaga);
 }

@@ -1,13 +1,12 @@
 package com.squad2.accenture.business;
 
-import com.squad2.accenture.exception.IdiomaAssociadoAVaga;
-import com.squad2.accenture.exception.IdiomaNaoExisteException;
-import com.squad2.accenture.exception.RegistroExisteException;
+import com.squad2.accenture.exception.RegistroJaExisteException;
 import com.squad2.accenture.dto.TgeIdiomaDto;
+import com.squad2.accenture.exception.RegistroNaoExisteException;
+import com.squad2.accenture.exception.RestricaoDeIntegridadeException;
 import com.squad2.accenture.model.TgeIdiomaModel;
 import com.squad2.accenture.repository.TgeIdiomaRepository;
 import com.squad2.accenture.repository.TgeVagaRepository;
-import com.squad2.accenture.repository.TgeVinculoHabilidadeVagaRepository;
 import com.squad2.accenture.repository.VgeIdiomaRepository;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -40,7 +39,7 @@ public class IdiomaBusiness {
             return idioma;
         }else{
             String concat = "Idioma " + this.tgeIdiomaRepository.findByIdioma(idioma.getIdioma()).getIdioma();
-            throw new RegistroExisteException(concat);
+            throw new RegistroJaExisteException(concat);
         }
     }
 
@@ -58,7 +57,7 @@ public class IdiomaBusiness {
     }
 
     public List<TgeIdiomaDto> listarTodosIdiomas(){
-        LOGGER.info(String.format("Início do método listarTodosIdiomas"));
+        LOGGER.info(String.format("Início do método listarTodosIdiomas()"));
         List<TgeIdiomaModel> tgeIdiomaModel = getTodosIdiomas();
         List<TgeIdiomaDto> response = new ArrayList<>();
 
@@ -79,14 +78,14 @@ public class IdiomaBusiness {
         Boolean retorno = this.vgeIdiomaRepository.existsByIdIdioma(idIdioma);
 
         if (retorno){
-            throw new IdiomaAssociadoAVaga(this.tgeIdiomaRepository.findById(idIdioma).get().getIdioma());
+            String concat = "Existem registros associados ao idioma " + this.tgeIdiomaRepository.findByIdIdioma(idIdioma).getIdioma() + ", não é possível deleta-lo;";
+            throw new RestricaoDeIntegridadeException(concat);
         }else{
             LOGGER.info(String.format("Idioma deletado com sucesso!"));
             this.tgeIdiomaRepository.deleteById(idIdioma);
         }
 
     }
-
 
     public TgeIdiomaModel atualizarIdioma(Integer idIdioma, TgeIdiomaModel tgeIdiomaModel){
         LOGGER.info(String.format("Início do método atualizar idioma"));
@@ -95,12 +94,15 @@ public class IdiomaBusiness {
         this.salvarIdioma(tgeIdiomaModel1);
         return tgeIdiomaModel1;
     }
+
     private void verificaExistenciaDeIdioma(Integer idIdioma){
         LOGGER.info(String.format("Verificando existencia do Idioma pelo ID: " + idIdioma));
         if (!(this.tgeIdiomaRepository.existsById(idIdioma))){
-            throw new IdiomaNaoExisteException(idIdioma);
+            String concat = "Idioma de ID: " + idIdioma + " não existe na base de dados. Insira um idIdioma diferente.";
+            throw new RegistroNaoExisteException(concat);
         }
     }
+
     private TgeIdiomaModel getIdiomaById(Integer idIdioma){
         LOGGER.info(String.format("Selecionando Idioma pelo ID: " + idIdioma));
         TgeIdiomaModel tgeIdiomaModel = tgeIdiomaRepository.findByIdIdioma(idIdioma);

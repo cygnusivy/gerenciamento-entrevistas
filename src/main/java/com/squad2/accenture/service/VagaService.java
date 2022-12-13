@@ -28,4 +28,8 @@ public class VagaService {
     public void deletarVagaById(Integer idVaga){
         this.vagaBusiness.deletarVaga(idVaga);
     }
+
+    public void alterarVaga(Integer id, TgeVagaModel tgeVagaModel){
+        this.vagaBusiness.atualizarVaga(id, tgeVagaModel);
+    }
 }

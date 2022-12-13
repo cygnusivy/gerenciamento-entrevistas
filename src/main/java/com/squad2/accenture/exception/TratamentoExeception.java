@@ -1,8 +1,5 @@
-package com.squad2.accenture.advice;
+package com.squad2.accenture.exception;
 
-import com.squad2.accenture.exception.IdVagaNaoPodeSerNull;
-import com.squad2.accenture.exception.VagaAssociadaHabilidade;
-import com.squad2.accenture.exception.VagaNaoExisteException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -11,23 +8,22 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class VagaAdvice {
-    private final Logger LOGGER = LoggerFactory.getLogger(VagaAdvice.class);
+public class TratamentoExeception {
+    private final Logger LOGGER = LoggerFactory.getLogger(TratamentoExeception.class);
 
     @ExceptionHandler
-    public ResponseEntity tratarExcecao(VagaAssociadaHabilidade e){
+    public ResponseEntity tratarExcecao(RegistroJaExisteException e){
         ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
         return response;
     }
-
     @ExceptionHandler
-    public ResponseEntity tratarExcecao(VagaNaoExisteException e){
+    public ResponseEntity tratarExcecao(RegistroNaoExisteException e){
         ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         return response;
     }
 
     @ExceptionHandler
-    public ResponseEntity tratarExcecao(IdVagaNaoPodeSerNull e){
+    public ResponseEntity tratarExcecao(RestricaoDeIntegridadeException e){
         ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         return response;
     }

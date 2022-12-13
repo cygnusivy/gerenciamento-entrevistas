@@ -3,6 +3,7 @@ package com.squad2.accenture.controller;
 import com.squad2.accenture.dto.TgeIdiomaDto;
 import com.squad2.accenture.model.TgeIdiomaModel;
 import com.squad2.accenture.service.IdiomaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,8 @@ import java.util.List;
 @RequestMapping("/idioma")
 public class IdiomaController {
 
-    private final IdiomaService idiomaService;
-
-
-    public IdiomaController(IdiomaService idiomaService) {
-        this.idiomaService = idiomaService;
-    }
+    @Autowired
+    IdiomaService idiomaService;
 
     @PostMapping
     public ResponseEntity salvarIdioma(@Valid @RequestBody TgeIdiomaModel idiomaModel){
@@ -36,12 +33,12 @@ public class IdiomaController {
     }
 
     @GetMapping
-    public List<TgeIdiomaDto> listarTodosIdiomas(Integer idIdioma){
+    public List<TgeIdiomaDto> listarTodosIdiomas(){
         return this.idiomaService.listarTodosIdiomas();
     }
 
     @DeleteMapping("/{idIdioma}")
-    ResponseEntity deletarIdioma(@PathVariable("idIdioma") Integer idIdioma){
+    public ResponseEntity deletarIdioma(@PathVariable("idIdioma") Integer idIdioma){
         this.idiomaService.deletarIdioma(idIdioma);
         ResponseEntity response = new ResponseEntity("Idioma deletado com sucesso!", HttpStatus.OK);
         return response;

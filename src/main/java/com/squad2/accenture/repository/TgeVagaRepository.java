@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Repository
 public interface TgeVagaRepository extends JpaRepository<TgeVagaModel, Integer> {
 
-
-
     Boolean existsByNomeVaga(String nomeVaga);
 
     TgeVagaModel findByNomeVaga(String nomeVaga);

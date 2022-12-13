@@ -1,7 +1,3 @@
-DELETE FROM tge_vinculo_habilidade_vaga;
-DELETE FROM tge_habilidade;
-DELETE FROM tge_vaga;
-DELETE FROM tge_idioma;
 
 INSERT INTO tge_idioma (nome_idioma) VALUES ('Albanês');
 INSERT INTO tge_idioma (nome_idioma) VALUES ('Alemão');
@@ -256,3 +252,26 @@ INSERT INTO tge_vinculo_idioma_vaga (id_idioma, id_vaga) VALUES (23, 33);
 INSERT INTO tge_vinculo_idioma_vaga (id_idioma, id_vaga) VALUES (3, 34);
 INSERT INTO tge_vinculo_idioma_vaga (id_idioma, id_vaga) VALUES (2, 34);
 
+INSERT INTO tge_status(cod_status, nome_status) VALUES ('ENT', 'A ENTREVISTAR');
+INSERT INTO tge_status(cod_status, nome_status) VALUES ('INT', 'INAPTO');
+INSERT INTO tge_status(cod_status, nome_status) VALUES ('CON', 'CONTRATADO');
+INSERT INTO tge_status(cod_status, nome_status) VALUES ('APR', 'APROVADO');
+
+INSERT INTO tge_senioridade(nome_senioridade) VALUES('Júnior');
+INSERT INTO tge_senioridade(nome_senioridade) VALUES('Pleno');
+INSERT INTO tge_senioridade(nome_senioridade) VALUES('Sênior');
+INSERT INTO tge_senioridade(nome_senioridade) VALUES('Especialista');
+
+INSERT INTO tge_candidato(cpf, nome, descricao_tecnica, email, pretencao_salario, nota_ingles, nota_logica, nota_sql, id_senioridade, cod_status, vagas_id_vaga) VALUES('123.145.698-85', 'Heitor', '--', 'email@.com', 1560, 10, 10, 10, 1, 'APR', 1);
+INSERT INTO tge_candidato(cpf, nome, descricao_tecnica, email, pretencao_salario, nota_ingles, nota_logica, nota_sql, id_senioridade, cod_status, vagas_id_vaga) VALUES('856.985.458-96', 'Jonas', '--', 'email@.com', 1560, 10, 10, 10, 1, 'APR', 1);
+INSERT INTO tge_candidato(cpf, nome, descricao_tecnica, email, pretencao_salario, nota_ingles, nota_logica, nota_sql, id_senioridade, cod_status, vagas_id_vaga) VALUES('365.245.856-11', 'Mateus', '--', 'email@.com', 1560, 10, 10, 10, 1, 'APR', 1);
+INSERT INTO tge_candidato(cpf, nome, descricao_tecnica, email, pretencao_salario, nota_ingles, nota_logica, nota_sql, id_senioridade, cod_status, vagas_id_vaga) VALUES('365.556.988-31', 'Lucas', '--', 'email@.com', 1560, 10, 10, 10, 1, 'APR', 1);
+INSERT INTO tge_candidato(cpf, nome, descricao_tecnica, email, pretencao_salario, nota_ingles, nota_logica, nota_sql, id_senioridade, cod_status, vagas_id_vaga) VALUES('256.669.365-63', 'Carlos', '--', 'email@.com', 1560, 10, 10, 10, 1, 'APR', 1);
+
+INSERT INTO tge_endereco(candidato_cpf, uf, cidade, pais, bairro, rua, numero) VALUES ('123.145.698-85', 'PE', 'Recife', 'Brasil', 'Iputinga', 'Rua da Paz', 12);
+
+INSERT INTO tge_telefone(candidato_cpf, numero) VALUES ('123.145.698-85', 145236);
+
+INSERT INTO tge_entrevista(data_entrevista, candidato_cpf, descr_habilidades_tecnicas, descr_habilidades_interpessoal, cod_status) VALUES ('2024-12-31', '123.145.698-85', '--', '--', 'APR');
+INSERT INTO tge_entrevista(data_entrevista, candidato_cpf, descr_habilidades_tecnicas, descr_habilidades_interpessoal, cod_status) VALUES ('2024-12-31', '856.985.458-96', '--', '--', 'APR');
+INSERT INTO tge_entrevista(data_entrevista, candidato_cpf, descr_habilidades_tecnicas, descr_habilidades_interpessoal, cod_status) VALUES ('2024-12-31', '365.245.856-11', '--', '--', 'APR');
